@@ -239,6 +239,6 @@ final class CliSnmpClientTest extends TestCase
 
     private function createCliSnmp(string $version = '2c') : CliSnmpClient
     {
-        return new CliSnmpClient(self::SNMP_HOST, 'public', 5, 3, $version);
+        return new CliSnmpClient(self::SNMP_HOST, 'public', 1, 3, $version);
     }
 }

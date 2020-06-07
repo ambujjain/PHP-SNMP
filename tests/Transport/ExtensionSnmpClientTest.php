@@ -220,6 +220,6 @@ final class ExtensionSnmpClientTest extends TestCase
 
     private function createExtensionSnmp(string $version = '2c') : ExtensionSnmpClient
     {
-        return new ExtensionSnmpClient(self::SNMP_HOST, 'public', 5000000, 3, $version);
+        return new ExtensionSnmpClient(self::SNMP_HOST, 'public', 1000000, 3, $version);
     }
 }

@@ -15,13 +15,17 @@ use function strrpos;
 final class OidStripper
 {
     /**
-     * @param array<string, mixed> $raw
+     * @param array<string, mixed> $leafOidData
      *
      * @return array<int, mixed>
+     *
+     * @template T
+     * @psalm-param array<string, T> $leafOidData
+     * @psalm-return array<int, T>
      */
-    public static function stripLeafOidsParentOid(array $raw) : array
+    public static function stripParent(array $leafOidData) : array
     {
-        $firstKey = array_key_first($raw);
+        $firstKey = array_key_first($leafOidData);
         assert(is_string($firstKey));
 
         $lastDotPos = strrpos($firstKey, '.');
@@ -30,7 +34,7 @@ final class OidStripper
         $stripLength = $lastDotPos + 1;
 
         $result = [];
-        foreach ($raw as $oid => $value) {
+        foreach ($leafOidData as $oid => $value) {
             $result[(int) substr($oid, $stripLength)] = $value;
         }
 

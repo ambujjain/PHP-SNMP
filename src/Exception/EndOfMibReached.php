@@ -16,7 +16,7 @@ final class EndOfMibReached extends RuntimeException implements SnmpException
         return new self('No more variables left in this MIB View (It is past the end of the MIB tree)');
     }
 
-    public static function withOid(string $oid) : self
+    public static function fromOid(string $oid) : self
     {
         return new self(
             sprintf(
@@ -32,6 +32,6 @@ final class EndOfMibReached extends RuntimeException implements SnmpException
             throw self::new();
         }
 
-        return self::withOid($matches[1]);
+        return self::fromOid($matches[1]);
     }
 }

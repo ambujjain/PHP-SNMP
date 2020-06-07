@@ -68,7 +68,7 @@ final class CliSnmpClient implements SnmpClient
         } catch (GeneralException $exception) {
             // check for SNMP v1
             if (preg_match('~\(noSuchName\).+Failed object: (.+?)$~ms', $exception->getMessage(), $matches) === 1) {
-                throw NoSuchInstanceExists::withOid($matches[1]);
+                throw NoSuchInstanceExists::fromOid($matches[1]);
             }
 
             throw $exception;
@@ -85,7 +85,7 @@ final class CliSnmpClient implements SnmpClient
         } catch (GeneralException $exception) {
             // check for SNMP v1
             if (preg_match('~\(noSuchName\).+Failed object: (.+?)$~ms', $exception->getMessage(), $matches) === 1) {
-                throw EndOfMibReached::withOid($matches[1]);
+                throw EndOfMibReached::fromOid($matches[1]);
             }
 
             throw $exception;
@@ -100,7 +100,7 @@ final class CliSnmpClient implements SnmpClient
 
         $result = $this->processOutput($output);
         if (count($result) === 0) {
-            throw NoSuchInstanceExists::withOid($oid);
+            throw NoSuchInstanceExists::fromOid($oid);
         }
 
         return $result;
@@ -124,15 +124,15 @@ final class CliSnmpClient implements SnmpClient
             [$oid, $value] = explode(' = ', $line, 2);
 
             if (strpos($value, 'No Such Object') === 0) {
-                throw NoSuchObjectExists::withOid($oid);
+                throw NoSuchObjectExists::fromOid($oid);
             }
 
             if (strpos($value, 'No Such Instance') === 0) {
-                throw NoSuchInstanceExists::withOid($oid);
+                throw NoSuchInstanceExists::fromOid($oid);
             }
 
             if (strpos($value, 'No more variables left in this MIB View') === 0) {
-                throw EndOfMibReached::withOid($oid);
+                throw EndOfMibReached::fromOid($oid);
             }
 
             $result[$oid] = ValueParser::parse($value);

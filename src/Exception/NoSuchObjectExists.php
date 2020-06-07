@@ -11,17 +11,12 @@ use function Safe\sprintf;
 
 final class NoSuchObjectExists extends RuntimeException implements SnmpException
 {
-    private function __construct(string $message = '', ?Throwable $previous = null)
-    {
-        parent::__construct($message, 0, $previous);
-    }
-
     public static function new() : self
     {
         return new self('No Such Object available on this agent at this OID');
     }
 
-    public static function withOid(string $oid) : self
+    public static function fromOid(string $oid) : self
     {
         return new self(sprintf('No Such Object available on this agent at this OID: %s', $oid));
     }
@@ -32,6 +27,6 @@ final class NoSuchObjectExists extends RuntimeException implements SnmpException
             throw self::new();
         }
 
-        return self::withOid($matches[1]);
+        return self::fromOid($matches[1]);
     }
 }

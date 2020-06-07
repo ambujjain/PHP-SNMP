@@ -127,15 +127,15 @@ final class ApiSnmpClient implements SnmpClient
         $result = json_decode((string) $response->getBody(), true, 4, JSON_BIGINT_AS_STRING);
         if (array_key_exists('error', $result)) {
             if (preg_match('~no such object: (.+)~', $result['error'], $matches) === 1) {
-                throw NoSuchObjectExists::withOid($matches[1]);
+                throw NoSuchObjectExists::fromOid($matches[1]);
             }
 
             if (preg_match('~no such instance: (.+)~', $result['error'], $matches) === 1) {
-                throw NoSuchInstanceExists::withOid($matches[1]);
+                throw NoSuchInstanceExists::fromOid($matches[1]);
             }
 
             if (preg_match('~end of mib: (.+)~', $result['error'], $matches) === 1) {
-                throw EndOfMibReached::withOid($matches[1]);
+                throw EndOfMibReached::fromOid($matches[1]);
             }
 
             throw GeneralException::new($result['error']);

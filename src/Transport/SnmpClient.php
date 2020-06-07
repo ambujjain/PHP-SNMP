@@ -7,14 +7,14 @@ namespace SimPod\PhpSnmp\Transport;
 interface SnmpClient
 {
     /**
-     * @param string[] $oids
+     * @param list<string> $oids
      *
      * @return array<string, mixed>
      */
     public function get(array $oids) : array;
 
     /**
-     * @param string[] $oids
+     * @param list<string> $oids
      *
      * @return array<string, mixed>
      */

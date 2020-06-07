@@ -10,7 +10,7 @@ use SimPod\PhpSnmp\Transport\SnmpClient;
 
 final class OidsStripperTest extends TestCase
 {
-    public function testStripLeafOidsParent() : void
+    public function testStripParent() : void
     {
         $raw = [
             '.1.2.3.1' => 'a',
@@ -24,7 +24,7 @@ final class OidsStripperTest extends TestCase
             3 => 'c',
         ];
 
-        self::assertSame($expected, OidStripper::stripLeafOidsParentOid($raw));
+        self::assertSame($expected, OidStripper::stripParent($raw));
     }
 
     public function testWalk() : void
